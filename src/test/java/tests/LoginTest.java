@@ -10,7 +10,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithPositiveCred() {
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
-        assertEquals("Products", productsPage.getTitle());
+        assertEquals("Некорректный заголовок", "Products", productsPage.getTitle());
     }
 
     @Test

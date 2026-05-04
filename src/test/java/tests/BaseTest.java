@@ -5,6 +5,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import pages.CartPage;
+import pages.CheckoutPage;
 import pages.LoginPage;
 import pages.ProductsPage;
 
@@ -15,9 +17,11 @@ public class BaseTest {
     WebDriver driver;
     LoginPage loginPage;
     ProductsPage productsPage;
+    CartPage cartPage;
+    CheckoutPage checkoutPage;
 
     @BeforeMethod
-    public void setUp(){
+    public void setUp() {
         ChromeOptions options = new ChromeOptions();
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("credentials_enable_service", false);
@@ -31,9 +35,11 @@ public class BaseTest {
 
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
+        cartPage = new CartPage(driver);
+        checkoutPage = new CheckoutPage(driver);
     }
 
-    @AfterMethod (alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         driver.quit();
     }
