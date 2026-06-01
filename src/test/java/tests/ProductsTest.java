@@ -7,6 +7,9 @@ import utils.Retry;
 
 import static org.testng.Assert.assertEquals;
 
+@Epic("E2E")
+@Feature("Product")
+@Owner("Lyamkina Tatyana")
 public class ProductsTest extends BaseTest {
 
     SoftAssert softAssert = new SoftAssert();
@@ -16,13 +19,11 @@ public class ProductsTest extends BaseTest {
             groups = {"product", "smoke"},
             retryAnalyzer = Retry.class)
     @Description("Проверка добавления товара на Product")
-    @Epic("E2E")
-    @Feature("Product")
     @TmsLink("Product-1")
-    @Owner("Lyamkina Tatyana")
     public void checkAddToCart() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
         assertEquals(productsPage.getTitle(),
                 "Products", "Переход на страницу не выполнен!");
         productsPage.addToCart("Sauce Labs Backpack");
@@ -36,13 +37,11 @@ public class ProductsTest extends BaseTest {
             groups = {"product", "smoke"},
             retryAnalyzer = Retry.class)
     @Description("Проверка добавления Fake товара на Product")
-    @Epic("E2E")
-    @Feature("Product")
     @TmsLink("Product-1.1")
-    @Owner("Lyamkina Tatyana")
     public void checkAddToCartFake() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce");
         assertEquals(productsPage.getTitle(),
                 "Products", "Переход на страницу не выполнен!");
         productsPage.addToCart("Рюкзак");
@@ -56,18 +55,17 @@ public class ProductsTest extends BaseTest {
             groups = {"cart", "smoke"},
             retryAnalyzer = Retry.class)
     @Description("Продолжение покупок(Continue Shopping) из Cart")
-    @Epic("E2E")
-    @Feature("Product")
     @TmsLink("Product-3")
-    @Owner("Lyamkina Tatyana")
     public void checkContinueShoppingButton() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.clickAddToCartButton();
-        productsPage.clickShoppingCart();
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce")
+                .addToCart("Sauce Labs Backpack")
+                .clickShoppingCart();
         softAssert.assertEquals(cartPage.getTitle(),
                 "Your Cart", "Переход на страницу не выполнен!");
-        cartPage.clickContinueShoppingButton();
+        cartPage.clickContinueShoppingButton()
+                .isPageOpened();
         softAssert.assertEquals(productsPage.getTitle(),
                 "Products", "Переход на страницу не выполнен!");
         softAssert.assertAll();
