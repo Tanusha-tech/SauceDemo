@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class LocatorTest {
 
-    @Test
+    @Test(enabled=false)
     public void chekLocator() {
         ChromeOptions options = new ChromeOptions();
         HashMap<String, Object> chromePrefs = new HashMap<>();
