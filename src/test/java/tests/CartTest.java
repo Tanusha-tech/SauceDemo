@@ -7,7 +7,9 @@ import utils.Retry;
 
 import static org.testng.Assert.assertEquals;
 
-
+@Epic("E2E")
+@Feature("Cart")
+@Owner("Lyamkina Tatyana")
 public class CartTest extends BaseTest {
 
     SoftAssert softAssert = new SoftAssert();
@@ -17,15 +19,15 @@ public class CartTest extends BaseTest {
             groups = {"cart", "smoke"},
             retryAnalyzer = Retry.class)
     @Description("Отображение товара в корзине")
-    @Epic("E2E")
-    @Feature("Cart")
     @TmsLink("Cart-2")
-    @Owner("Lyamkina Tatyana")
     public void checkCartIsNotEmpty() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.clickAddToCartButton();
-        productsPage.clickShoppingCart();
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce")
+                .isPageOpened()
+                .addToCart("Sauce Labs Backpack")
+                .clickShoppingCart()
+                .isPageOpened();
         softAssert.assertEquals(cartPage.getTitle(),
                 "Your Cart", "Переход на страницу не выполнен!");
         softAssert.assertTrue(cartPage.isCartNotEmpty(), "Корзина пуста!");
@@ -37,16 +39,16 @@ public class CartTest extends BaseTest {
             groups = {"product", "smoke"},
             retryAnalyzer = Retry.class)
     @Description("Проверка перехода в Cart из Product")
-    @Epic("E2E")
-    @Feature("Cart")
-    @TmsLink("Cart-2")
-    @Owner("Lyamkina Tatyana")
+    @TmsLink("Cart-3")
     public void checkShoppingCart() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce")
+                .isPageOpened();
         assertEquals(productsPage.getTitle(),
                 "Products", "Переход на страницу не выполнен");
-        productsPage.clickShoppingCart();
+        productsPage.clickShoppingCart()
+                    .isPageOpened();
         assertEquals(cartPage.getTitle(), "Your Cart",
                 "Переход на страницу не выполнен!");
     }

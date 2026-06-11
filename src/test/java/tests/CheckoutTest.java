@@ -8,6 +8,9 @@ import utils.Retry;
 
 import static org.testng.Assert.assertEquals;
 
+@Epic("E2E")
+@Feature("Checkout")
+@Owner("Lyamkina Tatyana")
 public class CheckoutTest extends BaseTest {
 
     SoftAssert softAssert = new SoftAssert();
@@ -17,18 +20,17 @@ public class CheckoutTest extends BaseTest {
             groups = {"cart", "smoke"},
             retryAnalyzer = Retry.class)
     @Description("Открытие страницы Checkout из Cart")
-    @Epic("E2E")
-    @Feature("Checkout")
     @TmsLink("Check-1")
-    @Owner("Lyamkina Tatyana")
     public void checkCheckoutButton() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.clickAddToCartButton();
-        productsPage.clickShoppingCart();
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce")
+                .addToCart("Sauce Labs Backpack")
+                .clickShoppingCart();
         softAssert.assertEquals(cartPage.getTitle(),
-                "Your Cart","Переход на страницу не выполнен!");
-        cartPage.clickCheckoutButton();
+                "Your Cart", "Переход на страницу не выполнен!");
+        cartPage.clickCheckoutButton()
+                .isPageOpened();
         softAssert.assertEquals(checkoutPage.getTitle(),
                 "Checkout: Your Information", "Переход на страницу не был выполнен!");
         softAssert.assertAll();
@@ -39,23 +41,22 @@ public class CheckoutTest extends BaseTest {
             groups = {"checkout", "smoke"},
             retryAnalyzer = Retry.class)
     @Description("Успешное заполнение страницы Checkout")
-    @Epic("E2E")
-    @Feature("Checkout")
     @TmsLink("Checkout-1")
-    @Owner("Lyamkina Tatyana")
     public void isPersonalInfoValid() {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.clickShoppingCart();
-        cartPage.clickCheckoutButton();
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce")
+                .clickShoppingCart()
+                .clickCheckoutButton();
         assertEquals(checkoutPage.getTitle(),
                 "Checkout: Your Information", "Страница не открылась");
         checkoutPage.fillPersonalInfo("Tatyana", "Lyamkina", "134134");
+        assertEquals(checkoutPage.getTitle(), "Checkout: Overview", "Страница не открылась");
     }
 
     @DataProvider(name = "Тестовые данные для негативных проверок")
     public Object[][] checkoutData() {
-        return new Object[][] {
+        return new Object[][]{
                 {"", "Lyamkina", "134134", "Error: First Name is required"},
                 {"Tatyana", "", "134134", "Error: Last Name is required"},
                 {"Tatyana", "Lyamkina", "", "Error: Postal Code is required"}
@@ -70,12 +71,12 @@ public class CheckoutTest extends BaseTest {
     @Epic("E2E")
     @Feature("Checkout")
     @TmsLink("Checkout-2")
-    @Owner("Lyamkina Tatyana")
     public void negativeCheckout(String firstName, String lastName, String postalCode, String errorMessage) {
-        loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
-        productsPage.clickShoppingCart();
-        cartPage.clickCheckoutButton();
+        loginPage.open()
+                .isPageOpened()
+                .login("standard_user", "secret_sauce")
+                .clickShoppingCart()
+                .clickCheckoutButton();
         softAssert.assertEquals(checkoutPage.getTitle(),
                 "Checkout: Your Information", "Страница не открылась");
         checkoutPage.fillPersonalInfo(firstName, lastName, postalCode);
