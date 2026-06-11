@@ -13,8 +13,8 @@
 
     <test name="Firefox">
         <classes>
-            <class name="tests.LocatorTest"/>
             <class name="tests.CartTest"/>
+            <class name="tests.ProductsTest"/>
             <class name="tests.CheckoutTest"/>
             <parameter name="browser" value="firefox"/>
         </classes>
