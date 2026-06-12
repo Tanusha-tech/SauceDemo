@@ -23,7 +23,7 @@ public class ProductsTest extends BaseTest {
     public void checkAddToCart() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce");
+                .login(user, password);
         assertEquals(productsPage.getTitle(),
                 "Products", "Переход на страницу не выполнен!");
         productsPage.addToCart("Sauce Labs Backpack");
@@ -41,7 +41,7 @@ public class ProductsTest extends BaseTest {
     public void checkAddToCartFake() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce");
+                .login(user, password);
         assertEquals(productsPage.getTitle(),
                 "Products", "Переход на страницу не выполнен!");
         productsPage.addToCart("Рюкзак");
@@ -59,7 +59,7 @@ public class ProductsTest extends BaseTest {
     public void checkContinueShoppingButton() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .addToCart("Sauce Labs Backpack")
                 .clickShoppingCart();
         softAssert.assertEquals(cartPage.getTitle(),

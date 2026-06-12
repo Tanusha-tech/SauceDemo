@@ -23,7 +23,7 @@ public class CartTest extends BaseTest {
     public void checkCartIsNotEmpty() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .isPageOpened()
                 .addToCart("Sauce Labs Backpack")
                 .clickShoppingCart()
@@ -43,7 +43,7 @@ public class CartTest extends BaseTest {
     public void checkShoppingCart() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .isPageOpened();
         assertEquals(productsPage.getTitle(),
                 "Products", "Переход на страницу не выполнен");

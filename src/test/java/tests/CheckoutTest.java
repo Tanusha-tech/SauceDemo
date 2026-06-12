@@ -24,7 +24,7 @@ public class CheckoutTest extends BaseTest {
     public void checkCheckoutButton() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .addToCart("Sauce Labs Backpack")
                 .clickShoppingCart();
         softAssert.assertEquals(cartPage.getTitle(),
@@ -45,7 +45,7 @@ public class CheckoutTest extends BaseTest {
     public void isPersonalInfoValid() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .clickShoppingCart()
                 .clickCheckoutButton();
         assertEquals(checkoutPage.getTitle(),
@@ -74,7 +74,7 @@ public class CheckoutTest extends BaseTest {
     public void negativeCheckout(String firstName, String lastName, String postalCode, String errorMessage) {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .clickShoppingCart()
                 .clickCheckoutButton();
         softAssert.assertEquals(checkoutPage.getTitle(),

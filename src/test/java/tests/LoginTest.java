@@ -19,7 +19,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithPositiveCred() {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .isPageOpened();
         assertEquals(productsPage.getTitle(), "Products", "Некорректный заголовок");
     }
@@ -27,7 +27,7 @@ public class LoginTest extends BaseTest {
     @DataProvider(name = "Тестовые данные для негативных проверок входа")
     public Object[][] loginData() {
         return new Object[][]{
-                {"standard_user", "", "Epic sadface: Password is required"},
+                {user, "", "Epic sadface: Password is required"},
                 {"", "", "Epic sadface: Username is required"},
                 {"test", "secret", "Epic sadface: Username and password do not match any user in this service"}
         };
