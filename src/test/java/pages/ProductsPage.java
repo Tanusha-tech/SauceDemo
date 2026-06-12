@@ -1,10 +1,12 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+@Log4j2
 public class ProductsPage extends BasePage {
 
     private static final By TITLE = By.xpath("//*[@data-test='title']");
@@ -18,6 +20,7 @@ public class ProductsPage extends BasePage {
 
     @Override
     public ProductsPage isPageOpened() {
+        log.info("Opening the products page");
             wait.until(ExpectedConditions.visibilityOfElementLocated(SHOPPING_CART));
         return this;
     }
@@ -33,12 +36,14 @@ public class ProductsPage extends BasePage {
 
     @Step("Переход в Cart из Product")
     public CartPage clickShoppingCart() {
+        log.info("Going to Cart from Product");
         driver.findElement(SHOPPING_CART).click();
         return new CartPage(driver);
     }
 
     @Step("Добавление товара '{product}' в корзину")
     public ProductsPage addToCart(String product) {
+        log.info("Adding item '{}' to cart", product);
         driver.findElement(By.xpath(String.format(ADD_TO_CART_PATTERN, product))).click();
         return this;
     }
